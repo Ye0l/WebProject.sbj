@@ -9,12 +9,13 @@ import javax.servlet.http.HttpServletResponse;
 import parksangyeol.dao.MemberDAO;
 import parksangyeol.dto.MemberDTO;
 
-public class MInsertCommand implements MCommand{
+public class MUpdateCommand implements MCommand{
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("utf-8");
 		// TODO Auto-generated method stub
+		System.out.println("MUpdateCommand arrived.");
+
 		MemberDTO dto = new MemberDTO();
 		dto.setId(request.getParameter("id"));
 		dto.setPwd(request.getParameter("pwd"));
@@ -22,7 +23,7 @@ public class MInsertCommand implements MCommand{
 		dto.setEmail(request.getParameter("email"));
 		
 		MemberDAO dao = new MemberDAO();
-		dao.insert(dto);
+		dao.update(dto);
 	}
-	
+
 }

@@ -9,20 +9,17 @@ import javax.servlet.http.HttpServletResponse;
 import parksangyeol.dao.MemberDAO;
 import parksangyeol.dto.MemberDTO;
 
-public class MInsertCommand implements MCommand{
+public class MViewCommand implements MCommand{
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("utf-8");
 		// TODO Auto-generated method stub
-		MemberDTO dto = new MemberDTO();
-		dto.setId(request.getParameter("id"));
-		dto.setPwd(request.getParameter("pwd"));
-		dto.setName(request.getParameter("name"));
-		dto.setEmail(request.getParameter("email"));
-		
+		System.out.println("MView arrived.");
+		String id = request.getParameter("id");
 		MemberDAO dao = new MemberDAO();
-		dao.insert(dto);
+		MemberDTO dto = dao.getMember(id);
+		
+		request.setAttribute("dto", dto);
 	}
-	
+
 }

@@ -41,6 +41,63 @@ public class MemberDAO {
 		}
 	}
 	
+	public void delete(String id) {
+		String sql = "DELETE FROM MEMBER WHERE ID=?";
+		
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			pstmt.executeQuery();
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+	}
+	
+	public void update(MemberDTO dto) {
+		String sql = "UPDATE MEMBER SET PWD=?, NAME=?, EMAIL=?, JOINDATE=? WHERE ID=?";
+		
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, dto.getPwd());
+			pstmt.setString(2, dto.getName());
+			pstmt.setString(3, dto.getEmail());
+			pstmt.setDate(4, dto.getJoinDate());
+			pstmt.setString(5, dto.getId());
+			
+			pstmt.executeQuery();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+	}
+	
+	public MemberDTO getMember(String id) {
+		String sql = "select * from member where id=?";
+		MemberDTO dto = new MemberDTO();
+		
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				dto.setId(rs.getString("id"));
+				dto.setName(rs.getString("name"));
+				dto.setEmail(rs.getString("email"));
+				dto.setJoinDate(rs.getDate("joinDate"));
+				dto.setPwd(rs.getString("pwd"));
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return dto;
+	}
+	
 	public ArrayList<MemberDTO> list() {
 		String sql = "select * from member";
 		
@@ -52,7 +109,7 @@ public class MemberDAO {
 			
 			while(rs.next()) {
 				MemberDTO dto = new MemberDTO();
-				dto.setId(rs.getNString("id"));
+				dto.setId(rs.getString("id"));
 				dto.setName(rs.getString("name"));
 				dto.setEmail(rs.getString("email"));
 				dto.setJoinDate(rs.getDate("joinDate"));

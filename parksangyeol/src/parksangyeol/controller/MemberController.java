@@ -10,8 +10,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import parksangyeol.command.MCommand;
+import parksangyeol.command.MDeleteCommand;
 import parksangyeol.command.MInsertCommand;
 import parksangyeol.command.MListCommand;
+import parksangyeol.command.MUpdateCommand;
+import parksangyeol.command.MViewCommand;
 
 @WebServlet("*.do")
 public class MemberController extends HttpServlet{
@@ -39,7 +42,22 @@ public class MemberController extends HttpServlet{
 		if(com != null && com.trim().equals("insert")) {
 			command = new MInsertCommand();
 			command.execute(request, response);
-			viewPage = "/WEB-INF/view/mList.jsp";
+			viewPage = "list.do";
+		}
+		if(com != null && com.trim().equals("view")) {
+			command = new MViewCommand();
+			command.execute(request, response);
+			viewPage = "/WEB-INF/view/mView.jsp";
+		}
+		if(com != null && com.trim().equals("update")) {
+			command = new MUpdateCommand();
+			command.execute(request, response);
+			viewPage = "list.do";
+		}
+		if(com != null && com.trim().equals("delete")) {
+			command = new MDeleteCommand();
+			command.execute(request, response);
+			viewPage = "list.do";
 		}
 		RequestDispatcher rd = request.getRequestDispatcher(viewPage);
 		rd.forward(request, response);

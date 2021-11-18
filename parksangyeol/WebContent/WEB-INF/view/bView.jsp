@@ -8,6 +8,48 @@
 <head>
 	<meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script type="text/javascript">
+	var xhr1 = new XMLHttpRequest();
+  	var xhr2 = new XMLHttpRequest();
+  	
+  	var id = encodeURIComponent(document.getElementById("id").value);
+
+	  	function replylist(){
+		  var replyTable = document.getElementById("replyTable");
+		  replyTable.innerHTML = "";
+
+		  	xhr1.onreadystatechange = function() {
+			  	if(this.readyState == 4 && this.status == 200) {
+				  	var json = this.responseText;
+				  	var list = JSON.parse(json);
+
+					for(var i = 0 in list) {
+						var row = replyTable.insertRow();
+						var cell1 = row.insertCell(0);
+						var cell2 = row.insertCell(1);
+						cell1.innerHTML = list[i].num;
+						cell2.innerHTML = list[i].reply;
+				  	}
+			  	}
+			};
+			xhr1.open("POST", "rlist.rp", true);
+			xhr1.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8;");
+			var data = "";
+			data += "id=" + id;
+			xhr1.send(data);
+		}
+
+		function rinsert() {
+			var reply = encodeURIComponent(document.getElementById("reply").value);
+
+			xhr2.onreadystatechange = function() {
+				if(this.readyState == 4 && this.status == 200) {
+					// sadasdsa
+				}
+			}
+		}
+  	
+  </script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>

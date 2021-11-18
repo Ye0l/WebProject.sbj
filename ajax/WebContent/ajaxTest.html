@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+	function sendData() {
+		var xhr = new XMLHttpRequest();
+		xhr.onreadystatechange = function() {
+			if(this.readyState == 4) {
+				document.getElementById('myDiv').innerHTML = this.responseText;
+			}
+		};
+		xhr.open("POST", "myText.txt", true);
+		xhr.send();
+	}
+</script>
+</head>
+<body>
+	<button onclick="sendData()">send</button>
+	<div id="myDiv"></div>
+</body>
+</html>
